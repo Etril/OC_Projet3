@@ -9,9 +9,9 @@ const works = await reponse.json();
 /*** Effaçage du HTML déjà présent pour les projets */
 document.querySelector(".gallery").innerHTML="";
 
-/*** Appel à la fonction génératrice de la gallerie */
+/*** Appel à la fonction générant le bouton permettant de réinitialiser les filtres */
 
-genererProjets(works);
+genererBoutonReset(works);
 
 /*** Appel à la fonction générant le menu des catégories */
 genererMenuCategories(works);
@@ -19,7 +19,10 @@ genererMenuCategories(works);
 /*** Appel à la fonction ajoutant des Event Listener aux boutons filtres */
 ajoutListenerFiltre(works);
 
-/*** Appel à la fonction générant le bouton permettant de réinitialiser les filtres */
 
-genererBoutonReset(works);
+/*** Appel à la fonction génératrice de la gallerie */
+
+genererProjets(works);
+
+
 

@@ -23,28 +23,22 @@ export function genererMenuCategories (works) {
     const categoriesSet= new Set (categoriesMap);
     const categoriesArray = Array.from(categoriesSet);
 
-    /*** Génération des elements HTML necessaires */
-    const portfolioElement= document.getElementById("portfolio");
-    const menuElement= document.createElement("div");
-    menuElement.classList.add("menu-categories");
-    const titreMenuElement= document.createElement("h2");
-    titreMenuElement.innerText= "Trier par la catégorie: ";
-    menuElement.appendChild(titreMenuElement);
+    /*** Récupération des elements HTML necessaires */
+    const menuElement= document.querySelector(".menu-categories");
 
     /*** Génération des boutons et insertion des catégories */
     for (let i=0; i<categoriesArray.length; i++) {
         const categorie= categoriesArray[i];
         const boutonElement= document.createElement("button");
         boutonElement.innerText= categorie;
+        boutonElement.classList="btn-filtre";
         menuElement.appendChild(boutonElement);
     }
-
-    portfolioElement.appendChild(menuElement);
 };
 
 
 export function ajoutListenerFiltre (works) {
-    const boutonsFiltre = document.querySelectorAll (".menu-categories button");
+    const boutonsFiltre = document.querySelectorAll (".menu-categories .btn-filtre");
 
 
     for (let i=0; i<boutonsFiltre.length; i++) {
@@ -64,7 +58,7 @@ export function ajoutListenerFiltre (works) {
 export function genererBoutonReset (works) {
     const menuElement= document.querySelector(".menu-categories");
     const boutonReset= document.createElement("button");
-    boutonReset.innerText = "Voir tous les projets";
+    boutonReset.innerText = "Tous";
     menuElement.appendChild(boutonReset);
     boutonReset.addEventListener("click", function () {
         genererProjets(works);
