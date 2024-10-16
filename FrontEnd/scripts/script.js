@@ -73,3 +73,19 @@ export function genererBoutonReset (works) {
         genererProjets(works);
     });
 }
+
+
+/*** LOGIN */
+
+/*** Ajout d'un Event Listener sur le formulaire */
+
+export function ajoutListenerLogin () {
+    const formLogin= document.querySelector("form");
+    formLogin.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const email = document.getElementById("email").value;
+        const mdp= document.getElementById("mdp").value;
+        console.log(email);
+        console.log(mdp);
+    });
+};
