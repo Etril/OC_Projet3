@@ -16,6 +16,8 @@ export function genererProjets(works) {
     }
 };
 
+
+/*** Définition de la fonction générant le menu des catégories */
 export function genererMenuCategories (works) {
     
     /*** Génération d'une array contenant les catégories sans doublons */
@@ -36,10 +38,14 @@ export function genererMenuCategories (works) {
     }
 };
 
+/*** Définition de la fonction ajoutant les Event Listener aux boutons filtres */
 
 export function ajoutListenerFiltre (works) {
+    /*** Récupération des éléments HTML nécessaires */
+
     const boutonsFiltre = document.querySelectorAll (".menu-categories .btn-filtre");
 
+    /*** Ajout de l'Event Listener appellant une fonction filtre */
 
     for (let i=0; i<boutonsFiltre.length; i++) {
         boutonsFiltre[i].addEventListener("click", async function (event) {
@@ -54,6 +60,9 @@ export function ajoutListenerFiltre (works) {
         } )
     }
 };
+
+
+/*** Définition d'une fonction générant entièrement le bouton réinitialiser */
 
 export function genererBoutonReset (works) {
     const menuElement= document.querySelector(".menu-categories");
