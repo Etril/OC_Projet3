@@ -100,7 +100,13 @@ export function validerFormulaire (email, mdp) {
     let regexEmail= new RegExp ("[a-z0-9._-]+@[a-z0-9._-]+\.[a-z0-9._-]+");
     let regexMdp= new RegExp ("[a-zA-Za-z0-9._-]+");
 
+
     if (regexEmail.test(email.trim()) === false || regexMdp.test(mdp.trim()) === false) {
+        const loginElement= document.querySelector(".login-main h2");
+        const loginErreur= document.createElement("p");
+        loginErreur.innerText= "Les informations ne sont pas dans un format valide";
+        loginErreur.classList.add("login-erreur");
+        loginElement.replaceChildren(loginErreur);
         console.log("Le formulaire n'est pas valide");
         return
 
@@ -110,18 +116,47 @@ export function validerFormulaire (email, mdp) {
 
 };
 
-export function envoyerFormulaire (email, mdp) {
+export async function envoyerFormulaire (email, mdp) {
     const requete= {
         "email": email,
         "password": mdp
     }
     const payLoad= JSON.stringify(requete);
     console.log (requete);
-    console.log(payLoad)
+    console.log(payLoad);
     
-    return fetch ("http://localhost:5678/api/users/login", {
+    try {
+     const response= await fetch ("http://localhost:5678/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: payLoad
-    });
+    })
+
+    if (!response.ok) {
+        const loginElement= document.querySelector(".login-main h2");
+        const loginErreur= document.createElement("p");
+        loginErreur.innerText="";
+        loginErreur.innerText= "L'identifiant ou le mot de passe est erroné";
+        loginErreur.classList.add("login-erreur");
+        loginElement.replaceChildren(loginErreur);
+        throw new Error (`Erreur: ${response.status}`);
+        
+
+    }
+
+    const token= (await response.json()).token;
+    console.log(token);
+
+    document.cookie = `token = ${token}; path=/`
+    sessionStorage.setItem("login", "true");
+    console.log(document.cookie);
+
+    
+    window.location.href = "index_admin.html"; 
+
+}   catch (error) {
+        console.error(error.message);
+    }
+
 };
+

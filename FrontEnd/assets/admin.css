@@ -1,0 +1,43 @@
+
+header {
+    display:flex;
+    flex-direction: column;
+    margin: 0px;
+}
+
+.header-admin {
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 59px;
+    background-color: black;
+    width: 1440px;
+    margin-bottom: 30px;
+}
+
+.header-admin p {
+    color: white; 
+}
+
+.fa-pen-to-square {
+    margin-right: 10px;
+}
+
+
+.header-classique {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.projets-modale {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#portfolio h2 {
+    margin-bottom: 0;
+}

@@ -6,6 +6,8 @@ const reponse = await fetch('http://localhost:5678/api/works');
 const works = await reponse.json();
 
 
+
+
 /*** Effaçage du HTML déjà présent pour les projets */
 document.querySelector(".gallery").innerHTML="";
 
@@ -19,10 +21,7 @@ genererMenuCategories(works);
 /*** Appel à la fonction ajoutant des Event Listener aux boutons filtres */
 ajoutListenerFiltre(works);
 
-
 /*** Appel à la fonction génératrice de la gallerie */
 
 genererProjets(works);
-
-
 

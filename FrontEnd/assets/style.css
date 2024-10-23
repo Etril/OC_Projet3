@@ -227,60 +227,10 @@ footer nav ul {
 
 a {
 	text-decoration: none;
-}
-
-/*** Page de Log-in */
-
-#login {
-	width: 40%;
-	margin: auto;
-}
-
-#login > * {
-	text-align: center;
-}
-
-#login h2{
-	margin-bottom: 20px;
-}
-
-#login form {
-	text-align: left;
-	margin-top:20px;
-	display: flex;
-	flex-direction: column;
-}
-
-#login input {
-	height: 50px;
-	font-size: 1.2em;
-	border: none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-}
-
-#login label {
-	margin: 2em 0 1em 0;
-	color: #3D3D3D;
-	font-weight: 700;
-}
-
-.link-login {
-	text-decoration: underline;
 	color: black;
-	color: #3D3D3D;
-	font-weight: 700;
 }
 
-.login-body {
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
-}
-
-.login-main {
-	flex:1;
-}
-
-.login-nav-bottom ul {
-	margin-right: 0;
+a :visited {
+	color: black;
+	text-decoration: none;
 }
