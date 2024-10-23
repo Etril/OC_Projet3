@@ -48,20 +48,40 @@
 		<h2>Mes Projets</h2>
         <div class="menu-modale"> <span> <a href="#modale1" class="lien-modale"> <i class="fa-regular fa-pen-to-square"></i> modifier </a> </span></div>
         </div>
-        <aside id="modale1" class="modale" aria-hidden="true" role="dialog" aria-labelledby="titre-modale">
+        <aside id="modale1" class="modale" aria-hidden="true" role="dialog" aria-labelledby="titre-modale-une">
             <i class="fa-solid fa-xmark"></i>
             <div class="modal-wrapper">
-                <h3 id="titre-modale"> Galerie photo </h3>
+                <h3 id="titre-modale-une" class="titre-modale"> Galerie photo </h3>
                 <div class="gallerie-mini"> </div>
                 <div class="line-modale"> </div>
-                <button class="btn-modale"> Ajouter une photo </button> 
+                <button class="btn-modale"> <a href="#modale2" class="lien-modale"> Ajouter une photo </a> </button> 
             </div>
-
-            
-        
         </aside>
-		<div class="menu-categories">
+		<aside id="modale2" class="modale" aria-hidden="true" role="dialog" aria-labelledby="titre-modale-deux">
+            <i class="fa-solid fa-xmark"></i>
+			<i class="fa-solid fa-arrow-left"></i>
+            <div class="modal-wrapper">
+				<h3 id="titre-modale-deux" class="titre-modale"> Ajout photo </h3>
+					<form class= "formulaire-ajout" id="formulaire-ajout">
+						<div class="ajout-photo">
+						<i class="fa-regular fa-image"></i>
+						<label for="ajout-photo" class="custom-ajout"> <span class= "text-ajout">+Ajouter photo </span> </label>
+						<input type="file" id="ajout-photo" accept="image/png, image/jpg">
+						<p> jpg, png: 4mo max </p>
+						</div>
+						<label for="titre"> Titre </label> 
+						<input type="text" id="titre" name="titre"> 
+						<label for="champ-categories"> Categorie </label> 
+						<select id="champ-categories" name="champ-categories" form="formulaire-ajout"> 
 
+						</select>
+						<div class="line-modale"> </div>
+						<input type="submit" value="Valider">
+					</form>
+				</div>
+			<div>
+		</aside>
+		<div class="menu-categories">
 		</div>
 		<div class="gallery">
 			<figure>

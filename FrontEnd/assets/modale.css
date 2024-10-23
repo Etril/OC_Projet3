@@ -9,6 +9,17 @@
     display: none;
 }
 
+#modale2 {
+    position: absolute;
+    top: 680px;
+    left: 405px;
+    width: 630px;
+    height: 688px;
+    background-color: white;
+    border-radius: 10px;
+    display: none;
+}
+
 .modal-wrapper {
     display: flex;
     flex-direction: column;
@@ -26,13 +37,12 @@
 
 }
 
-#titre-modale {
+.titre-modale {
     color: black;
     font-size: 26px;
     font-family: 'Work Sans';
     margin-bottom: 50px;
     font-weight: 400;
-    
 }
 
 .btn-modale {
@@ -46,6 +56,10 @@
 	text-align: center;
 	padding-left: 20px;
 	padding-right: 20px;
+}
+
+.btn-modale a {
+    color: white;
 }
 
 .gallerie-mini {
@@ -91,5 +105,57 @@
     right: 20px;
     top: 20px;
     font-weight: bold;
-    font-size: larger;
+    font-size: xx-large;
+}
+
+.fa-arrow-left {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+.formulaire-ajout {
+    display:flex;
+    flex-direction: column;
+}
+
+.ajout-photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 420px;
+    height: 169px;
+    background-color: #E8F1F6;
+}
+
+.fa-image {
+    font-size: 76px;
+    color: #B3B3B3;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#ajout-photo {
+    display: none;
+}
+
+.custom-ajout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: 'Syne';
+	background-color: #B3B3B3;
+	color: white;
+	height: 36px;
+    width: 173px;
+	border-radius: 50px;
+	text-align: center;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.text-ajout {
+    color: #306685;
 }

@@ -38,7 +38,6 @@ export function ajoutListenerModale() {
     modaleElement.forEach(a => {
         a.addEventListener("click", function(e) {
         openModale(e);
-        console.log("bouton cliqué");
     });
 })
 };
@@ -68,18 +67,24 @@ export function fermerModaleX () {
 
 export function fermerModaleEcran() {
     window.onclick = function(event) {
-        const modale= document.querySelectorAll(".modale");
-        if (event.target != modale ) {
+        const modale = document.querySelectorAll('.modale')
+        console.log(event.target)
+        console.log(event.target.matches(".lien-modale"))
+        console.log(!event.target.closest('.modale'))
+        if (event.target.matches(".lien-modale")) {
+            return
+        }
+        if (!event.target.closest('.modale'))
             modale.forEach(b => {
                 b.style.display= "none";
             });
             console.log("fermer modale");
-        }
+        
     }
 };
 
 
-
+/*** Definition d'une fonction générant la gallerie des projets */
 
 export function genererProjets(works) {
     document.querySelector(".gallery").innerHTML="";
@@ -97,3 +102,30 @@ export function genererProjets(works) {
         galleryElement.appendChild(figureElement);
     }
 };
+
+
+export function genererCategoriesModale (works) {
+
+/*** Génération d'une array contenant les catégories sans doublons */
+   
+    const categoriesMap= works.map (works => works.category.name);
+    const categoriesSet= new Set (categoriesMap);
+    const categoriesArray = Array.from(categoriesSet);
+
+    const champElement= document.getElementById("champ-categories");
+
+    /*** Génération des boutons et insertion des catégories */
+    for (let i=0; i<categoriesArray.length; i++) {
+        const categorie= categoriesArray[i];
+        const optionElement= document.createElement("option");
+        optionElement.innerText= categorie;
+        optionElement.setAttribute("value", categorie);
+        champElement.appendChild(optionElement);
+    }
+};
+
+/*** Génération d'une fonction pour afficher une miniature de l'image à uploader */
+
+export function afficherMiniature () {
+    
+}

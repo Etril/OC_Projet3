@@ -1,5 +1,5 @@
 /*** Import des fonctions nécessaires */
-import {genererProjets, genererProjetsModale, ajoutListenerModale, openModale, fermerModaleX, fermerModaleEcran} from "./script_admin.js";
+import {genererProjets, genererProjetsModale, ajoutListenerModale, openModale, fermerModaleX, fermerModaleEcran, genererCategoriesModale} from "./script_admin.js";
 
 /*** Récupération des projets dans l'API */
 const reponse = await fetch('http://localhost:5678/api/works');
@@ -16,6 +16,9 @@ genererProjets(works);
 
 genererProjetsModale(works);
 
+/*** Appel à la fonction générant le menu catégorie de la deuxième modale */
+genererCategoriesModale (works);
+
 /*** Appel à la fonction ajoutant un event listener sur les liens modaux */
 
 ajoutListenerModale();
@@ -24,6 +27,4 @@ ajoutListenerModale();
 
 fermerModaleX();
 fermerModaleEcran();
-
-
 
