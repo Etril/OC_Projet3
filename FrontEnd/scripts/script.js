@@ -78,8 +78,6 @@ export function genererBoutonReset (works) {
 /*** LOGIN */
 
 
-
-
 /*** Ajout d'un Event Listener sur le formulaire */
 
 export function ajoutListenerLogin () {

@@ -15,7 +15,6 @@
     <script src="https://kit.fontawesome.com/8e7eda9967.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="backdrop">
 <header>
     <div class= "header-admin">
         <p class="mode-edition"> <span> <i class="fa-regular fa-pen-to-square"></i> Mode édition <span> </p>
@@ -26,7 +25,7 @@
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<a href="./login.html"> <li> logout</li> </a>
+			<a href="./login.html" class="logout"> <li> logout</li> </a>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -47,7 +46,7 @@
 	<section id="portfolio">
         <div class= "projets-modale">
 		<h2>Mes Projets</h2>
-        <div class="menu-modale"> <span> <a href="#modale1" class="lien-modale"> <i class="fa-regular fa-pen-to-square"></i> modifier </a> </span></div>
+        <div class="menu-modale"> <span> <a href="#modale1" class="lien-modale" id="lien-modale-un"> <i class="fa-regular fa-pen-to-square"></i> modifier </a> </span></div>
         </div>
         <aside id="modale1" class="modale" aria-hidden="true" role="dialog" aria-labelledby="titre-modale-une">
             <div class="modal-wrapper">
@@ -69,6 +68,7 @@
 						<i class="fa-regular fa-image"></i>
 						<label for="ajout-photo" class="custom-ajout"> <span class= "text-ajout">+Ajouter photo </span> </label>
 						<input type="file" id="ajout-photo" accept="image/png, image/jpg">
+						<img src="#" alt="Image à ajouter" id="file-preview">
 						<p> jpg, png: 4mo max </p>
 						</div>
 						<label for="titre"> Titre </label> 
@@ -154,6 +154,5 @@
 		</ul>
 	</nav>
 </footer>
-</div>
 </body>
 </html>

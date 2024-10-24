@@ -1,9 +1,17 @@
 /*** Import des fonctions nécessaires */
-import {genererProjets, genererProjetsModale, ajoutListenerModale, openModale, fermerModaleX, fermerModaleEcran, genererCategoriesModale} from "./script_admin.js";
+import {genererProjets, genererProjetsModale, ajoutListenerModale, openModale, fermerModaleX, fermerModaleEcran, genererCategoriesModale, checkLogin, ajoutLogout, afficherMiniature, retourModale} from "./script_admin.js";
 
 /*** Récupération des projets dans l'API */
 const reponse = await fetch('http://localhost:5678/api/works');
 const works = await reponse.json();
+
+/*** Appel à la fonction vérifiant si l'utilisateur est bien log-in */
+
+checkLogin();
+
+/*** Appel à la fonction ajoutant le logout */
+
+ajoutLogout();
 
 /*** Effaçage du HTML déjà présent pour les projets */
 document.querySelector(".gallery").innerHTML="";
@@ -27,4 +35,14 @@ ajoutListenerModale();
 
 fermerModaleX();
 fermerModaleEcran();
+
+/*** Appel à la fonction permettant de revenir en arrière */
+
+retourModale();
+
+/*** Appel à la fonction permettant d'afficher une miniature de l'image */
+
+afficherMiniature();
+
+
 

@@ -1,3 +1,22 @@
+/*** Definition d'une fonction verifiant si la personne est bien log-in */
+
+export function checkLogin () {
+    const login = sessionStorage.getItem("login");
+    if (login !="true") {
+        window.location.href = "login.html"; 
+    }
+    console.log(login);
+}
+
+/*** Definition d'une fonction permettant de se déconnecter */
+
+export function ajoutLogout() {
+    const logoutElement= document.querySelector(".logout");
+    logoutElement.addEventListener("click", function () {
+        sessionStorage.clear();
+    });
+};
+
 /*** Definition de la fonction génératrice de la gallerie dans la modale */
 
 export function genererProjetsModale(works) {
@@ -100,6 +119,7 @@ export function genererProjets(works) {
     }
 };
 
+/*** Definition d'une fonction pour générer le menu des categories dans la modale 2 */
 
 export function genererCategoriesModale (works) {
 
@@ -121,8 +141,44 @@ export function genererCategoriesModale (works) {
     }
 };
 
-/*** Génération d'une fonction pour afficher une miniature de l'image à uploader */
+/*** Definition d'une fonction pour afficher une miniature de l'image à uploader */
 
 export function afficherMiniature () {
-    
-}
+    const ajoutElement= document.getElementById("ajout-photo");
+    ajoutElement.addEventListener("change", function () {
+        const file= ajoutElement.files;
+        const divElement= document.querySelector(".ajout-photo");
+        const imageElement= document.getElementById("file-preview");
+        if (file) {
+        const fileReader= new FileReader();
+        fileReader.onload= event => {
+            imageElement.src= event.target.result;
+            console.log(imageElement);
+            console.log(event.target.result);
+        }
+        fileReader.readAsDataURL(file[0]);
+    }
+    imageElement.style.display = "block";
+    divElement.innerHTML="";
+    divElement.appendChild(imageElement);
+});
+};
+
+
+export function retourModale () {
+    const flecheElement= document.querySelector(".fa-arrow-left");
+    flecheElement.addEventListener("click", function() {
+            const modaleFermerElement= document.querySelectorAll(".modale");
+            modaleFermerElement.forEach(b => {
+                b.style.display= "none"
+            });
+            modaleFermerElement.forEach(c => {
+                c.setAttribute("aria-hidden", "true");
+            });
+            modaleFermerElement.forEach(d => {
+                d.setAttribute("aria-modal", "false");
+            });
+            
+            document.getElementById("lien-modale-un").click();
+        })
+};

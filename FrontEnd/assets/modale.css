@@ -166,3 +166,9 @@
 .text-ajout {
     color: #306685;
 }
+
+#file-preview {
+    width: 129px;
+    height: 169px;
+    display: none;
+}
