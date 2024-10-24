@@ -67,14 +67,11 @@ export function fermerModaleX () {
 
 export function fermerModaleEcran() {
     window.onclick = function(event) {
-        const modale = document.querySelectorAll('.modale')
-        console.log(event.target)
-        console.log(event.target.matches(".lien-modale"))
-        console.log(!event.target.closest('.modale'))
+        const modale = document.querySelectorAll('.modale');
         if (event.target.matches(".lien-modale")) {
             return
         }
-        if (!event.target.closest('.modale'))
+        if (!event.target.closest('.modal-wrapper'))
             modale.forEach(b => {
                 b.style.display= "none";
             });

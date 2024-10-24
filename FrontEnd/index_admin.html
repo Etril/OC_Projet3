@@ -15,6 +15,7 @@
     <script src="https://kit.fontawesome.com/8e7eda9967.js" crossorigin="anonymous"></script>
 </head>
 <body>
+<div class="backdrop">
 <header>
     <div class= "header-admin">
         <p class="mode-edition"> <span> <i class="fa-regular fa-pen-to-square"></i> Mode édition <span> </p>
@@ -49,8 +50,8 @@
         <div class="menu-modale"> <span> <a href="#modale1" class="lien-modale"> <i class="fa-regular fa-pen-to-square"></i> modifier </a> </span></div>
         </div>
         <aside id="modale1" class="modale" aria-hidden="true" role="dialog" aria-labelledby="titre-modale-une">
-            <i class="fa-solid fa-xmark"></i>
             <div class="modal-wrapper">
+				<i class="fa-solid fa-xmark"></i>
                 <h3 id="titre-modale-une" class="titre-modale"> Galerie photo </h3>
                 <div class="gallerie-mini"> </div>
                 <div class="line-modale"> </div>
@@ -58,9 +59,10 @@
             </div>
         </aside>
 		<aside id="modale2" class="modale" aria-hidden="true" role="dialog" aria-labelledby="titre-modale-deux">
-            <i class="fa-solid fa-xmark"></i>
-			<i class="fa-solid fa-arrow-left"></i>
+			
             <div class="modal-wrapper">
+				<i class="fa-solid fa-xmark"></i>
+				<i class="fa-solid fa-arrow-left"></i>
 				<h3 id="titre-modale-deux" class="titre-modale"> Ajout photo </h3>
 					<form class= "formulaire-ajout" id="formulaire-ajout">
 						<div class="ajout-photo">
@@ -152,5 +154,6 @@
 		</ul>
 	</nav>
 </footer>
+</div>
 </body>
 </html>
