@@ -145,12 +145,11 @@ export async function envoyerFormulaire (email, mdp) {
     const token= (await response.json()).token;
     console.log(token);
 
-    document.cookie = `token = ${token}; path=/`
+    sessionStorage.setItem("token", token);
     sessionStorage.setItem("login", "true");
-    console.log(document.cookie);
 
     
-    window.location.href = "index_admin.html"; 
+    window.location.href = "dashboard.html"; 
 
 }   catch (error) {
         console.error(error.message);
