@@ -1,5 +1,5 @@
 /*** Import des fonctions nécessaires */
-import {genererProjets, genererProjetsModale, ajoutListenerModale, openModale, fermerModaleX, fermerModaleEcran, genererCategoriesModale, checkLogin, ajoutLogout, afficherMiniature, retourModale, viderFormulaire, ajoutListenerAdd, validerFormulaire, envoyerFormulaireAjout} from "./script_admin.js";
+import {genererProjets, genererProjetsModale, ajoutListenerModale, openModale, fermerModaleX, fermerModaleEcran, genererCategoriesModale, checkLogin, ajoutLogout, afficherMiniature, retourModale, viderFormulaire, ajoutListenerAdd, validerFormulaire, envoyerFormulaireAjout, supprimerProjets} from "./script_admin.js";
 
 /*** Récupération des projets dans l'API */
 const reponse = await fetch('http://localhost:5678/api/works');

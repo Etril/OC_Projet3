@@ -34,13 +34,68 @@ export function genererProjetsModale(works) {
         iconeElement.innerHTML= `<i class="fa-solid fa-trash-can">`;
         lienElement.classList.add("icone");
         lienElement.setAttribute("href", "#");
+        lienElement.setAttribute("id", `${projet.id}`);
         imageElement.src= projet.imageUrl;
         lienElement.appendChild(iconeElement);
         figureElement.appendChild(lienElement);
         figureElement.appendChild(imageElement);
         galleryElement.appendChild(figureElement);
+        lienElement.addEventListener("click", function () {
+            const iconeId= lienElement.getAttribute("id");
+            supprimerProjets(iconeId);
+    });
+    };
+}; 
+
+
+
+export async function supprimerProjets (iconeId) {
+    const token = sessionStorage.getItem("token");
+
+    const requete= {
+        "id": iconeId
     }
+    const payLoad= JSON.stringify(requete);
+    console.log (requete);
+    console.log(payLoad);
+    
+    try {
+     const response= await fetch (`http://localhost:5678/api/works/${iconeId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+         },
+        body: payLoad
+    })
+
+    if (!response.ok) {
+        const loginElement= document.querySelector(".login-main h2");
+        const loginErreur= document.createElement("p");
+        loginErreur.innerText="";
+        loginErreur.innerText= "L'identifiant ou le mot de passe est erroné";
+        loginErreur.classList.add("login-erreur");
+        loginElement.replaceChildren(loginErreur);
+        throw new Error (`Erreur: ${response.status}`);
+        
+    }
+
+    const reponse = await fetch('http://localhost:5678/api/works');
+    const works = await reponse.json();
+
+    console.log(`Le projet ${iconeId} a bien été supprimé`);
+
+    genererProjets(works);
+    genererProjetsModale(works);
+
+}   catch (error) {
+        console.error(error.message);
+    }
+
 };
+
+
+
+
 
 /*** Definition de la fonction permettant d'ouvrir la modale visée par le lien cliqué*/
 
@@ -54,6 +109,7 @@ export async function openModale(e) {
     const reponse = await fetch('http://localhost:5678/api/works');
     const works = await reponse.json();
     genererCategoriesModale (works);
+    genererProjetsModale(works);
     afficherMiniature();
     ajoutListenerAdd ();
 }
@@ -126,6 +182,8 @@ export function genererProjets(works) {
     }
 };
 
+
+
 /*** Definition d'une fonction pour générer le menu des categories dans la modale 2 */
 
 export function genererCategoriesModale (works) {
@@ -142,9 +200,10 @@ export function genererCategoriesModale (works) {
     /*** Génération des boutons et insertion des catégories */
     for (let i=0; i<categoriesArray.length; i++) {
         const categorie= categoriesArray[i];
+        const categorieId= (works.find (works => works.category.name == categorie)).id;
         const optionElement= document.createElement("option");
         optionElement.innerText= categorie;
-        optionElement.setAttribute("value", categorie);
+        optionElement.setAttribute("value", categorieId);
         champElement.appendChild(optionElement);
     }
 };
@@ -155,7 +214,7 @@ export function afficherMiniature () {
     const ajoutElement= document.getElementById("ajout-photo");
     ajoutElement.addEventListener("change", function () {
         const file= ajoutElement.files;
-        const divElement= document.querySelector(".ajout-photo");
+        const formElement= document.querySelector(".ajout-photo");
         const imageElement= document.getElementById("file-preview");
         if (file) {
         const fileReader= new FileReader();
@@ -165,8 +224,7 @@ export function afficherMiniature () {
         fileReader.readAsDataURL(file[0]);
     }
     imageElement.style.display = "block";
-    divElement.innerHTML="";
-    divElement.appendChild(imageElement);
+    formElement.style.display= "none";
 });
 };
 
@@ -198,12 +256,16 @@ export async function viderFormulaire () {
     const works = await reponse.json();
     const formElement=document.getElementById("formulaire-ajout");
     formElement.innerHTML="";
-    formElement.innerHTML=`<div class="ajout-photo">
+    formElement.innerHTML=`<div class="background">
+						<div class="preview-photo">
+							<img src="#" alt="Image à ajouter" id="file-preview">
+						<div class="ajout-photo">
 						<i class="fa-regular fa-image"></i>
 						<label for="ajout-photo" class="custom-ajout"> <span class= "text-ajout">+Ajouter photo </span> </label>
 						<input type="file" id="ajout-photo" accept="image/png, image/jpg">
-						<img src="#" alt="Image à ajouter" id="file-preview">
 						<p> jpg, png: 4mo max </p>
+						</div>
+						</div>
 						</div>
 						<label for="titre"> Titre </label> 
 						<input type="text" id="titre" name="titre"> 
@@ -217,60 +279,56 @@ export async function viderFormulaire () {
     genererCategoriesModale(works);
 }
 
+
 /*** Ajout d'un Event Listener sur le formulaire */
 
 export function ajoutListenerAdd () {
     const formAjout= document.getElementById("formulaire-ajout");
     formAjout.addEventListener("submit", function (event) {
         event.preventDefault();
+        const formData= new FormData();
         const image= document.getElementById("file-preview").src;
+        console.log(image);
         const titre= document.getElementById("titre").value;
-        const categorie= document.getElementById("champ-categories").value;
-        console.log(titre);
-        console.log(categorie);
-        console.log(image)
-        validerFormulaire (titre, categorie, image);
+        const categorie= parseInt(document.getElementById("champ-categories").value);
+        formData.append("image", image);
+        formData.append("title", titre);
+        formData.append("category", categorie);
+        validerFormulaire (formData);
     });
 };
 
 /*** Fonction validant le formulaire */
 
-export function validerFormulaire (titre, categorie, image) {
-    let regexTitre= new RegExp ("[a-zA-Za-z0-9._-]+");
+export function validerFormulaire (titre, formData) {
+    // let regexTitre= new RegExp ("[a-zA-Za-z0-9._-]+");
 
 
-    if (regexTitre.test(titre.trim()) === false) {
-        const erreurElement= document.getElementById("titre-modale-deux");
-        const erreurTitre= document.createElement("p");
-        erreurTitre.innerText= "Le titre ne peut pas être vide";
-        erreurTitre.classList.add("erreur");
-        erreurElement.replaceChildren(erreurTitre);
-        viderFormulaire ();
-        return
-    };
+    // if (regexTitre.test(titre.trim()) === false) {
+    //     const erreurElement= document.getElementById("titre-modale-deux");
+    //     const erreurTitre= document.createElement("p");
+    //     erreurTitre.innerText= "Le titre ne peut pas être vide";
+    //     erreurTitre.classList.add("erreur");
+    //     erreurElement.replaceChildren(erreurTitre);
+    //     viderFormulaire ();
+    //     return
+    // };
 
-    return envoyerFormulaireAjout (titre, categorie, image);
+    return envoyerFormulaireAjout (titre, formData);
 
 };
 
-export async function envoyerFormulaireAjout (titre, categorie, image) {
-    const requete= {
-        "image": image,
-        "title": titre,
-        "category": categorie,
-    }
-    const payLoad= JSON.stringify(requete);
+/*** Definition de la fonction envoyant la requête pour ajouter le projet */
+
+export async function envoyerFormulaireAjout (formData) {
     const token = sessionStorage.getItem("token");
-    console.log (requete);
-    console.log(payLoad);
     
     try {
-     const response= await fetch ("http://localhost:5678/api/works", {
+     const response = await fetch ("http://localhost:5678/api/works", {
         method: "POST",
-        headers: { "Content-Type": "multipart/form-data",
-            "Authorization": `Bearer ${token}` 
+        headers: {"Authorization": `Bearer ${token}` 
          },
-        body: payLoad
+        body: formData
     })
 
     if (!response.ok) {
@@ -280,6 +338,7 @@ export async function envoyerFormulaireAjout (titre, categorie, image) {
         erreurTitre.classList.add("erreur");
         erreurElement.replaceChildren(erreurTitre);
         viderFormulaire ();
+        console.log(payLoad);
         throw new Error (`Erreur: ${response.status}`);
         
 
