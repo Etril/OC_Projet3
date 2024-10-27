@@ -21,10 +21,13 @@ export function ajoutLogout() {
 
 /*** Definition de la fonction génératrice de la gallerie dans la modale */
 
-export function genererProjetsModale(works) {
+export async function genererProjetsModale() {
     document.querySelector(".gallerie-mini").innerHTML="";
+    const reponse = await fetch('http://localhost:5678/api/works');
+    const works = await reponse.json();
 
     for (let i=0; i<works.length; i++) { 
+
         const projet = works[i];
         const galleryElement= document.querySelector(".gallerie-mini");
         const figureElement= document.createElement("figure");
@@ -42,7 +45,7 @@ export function genererProjetsModale(works) {
         galleryElement.appendChild(figureElement);
         lienElement.addEventListener("click", function () {
             const iconeId= lienElement.getAttribute("id");
-            supprimerProjets(iconeId);
+            supprimerProjets(iconeId); 
     });
     };
 }; 
@@ -108,10 +111,9 @@ export async function openModale(e) {
     target.setAttribute("aria-modal", "true");
     const reponse = await fetch('http://localhost:5678/api/works');
     const works = await reponse.json();
-    genererCategoriesModale (works);
-    genererProjetsModale(works);
+    genererCategoriesModale ();
+    genererProjetsModale();
     afficherMiniature();
-    ajoutListenerAdd ();
 }
 
 /*** Definition d'une fonction ajoutant un event Listener sur les liens ouvrant des modales*/
@@ -165,8 +167,10 @@ export function fermerModaleEcran() {
 
 /*** Definition d'une fonction générant la gallerie des projets */
 
-export function genererProjets(works) {
+export async function genererProjets() {
     document.querySelector(".gallery").innerHTML="";
+    const reponse = await fetch('http://localhost:5678/api/works');
+    const works = await reponse.json();
 
     for (let i=0; i<works.length; i++) { 
         const projet = works[i];
@@ -186,7 +190,10 @@ export function genererProjets(works) {
 
 /*** Definition d'une fonction pour générer le menu des categories dans la modale 2 */
 
-export function genererCategoriesModale (works) {
+export async function genererCategoriesModale () {
+
+    const reponse = await fetch('http://localhost:5678/api/works');
+    const works = await reponse.json();
 
 /*** Génération d'une array contenant les catégories sans doublons */
    
@@ -261,20 +268,20 @@ export async function viderFormulaire () {
 							<img src="#" alt="Image à ajouter" id="file-preview">
 						<div class="ajout-photo">
 						<i class="fa-regular fa-image"></i>
-						<label for="ajout-photo" class="custom-ajout"> <span class= "text-ajout">+Ajouter photo </span> </label>
+						<label for="ajout-photo" class="custom-ajout"> <span class= "text-ajout">+ Ajouter photo </span> </label>
 						<input type="file" id="ajout-photo" accept="image/png, image/jpg">
-						<p> jpg, png: 4mo max </p>
+						<p class="ajout-texte"> jpg, png: 4mo max </p>
 						</div>
 						</div>
 						</div>
-						<label for="titre"> Titre </label> 
+						<label for="titre" class="label-form"> Titre </label> 
 						<input type="text" id="titre" name="titre"> 
-						<label for="champ-categories"> Categorie </label> 
+						<label for="champ-categories" class="label-form"> Categorie </label> 
 						<select id="champ-categories" name="champ-categories" form="formulaire-ajout"> 
 
 						</select>
 						<div class="line-modale"> </div>
-						<input type="submit" value="Valider">`;
+						<input type="submit" id="bouton-valider" value="Valider">`;
     afficherMiniature ();
     genererCategoriesModale(works);
 }
@@ -286,41 +293,55 @@ export function ajoutListenerAdd () {
     const formAjout= document.getElementById("formulaire-ajout");
     formAjout.addEventListener("submit", function (event) {
         event.preventDefault();
-        const formData= new FormData();
-        const image= document.getElementById("file-preview").src;
-        console.log(image);
+        const data= new FormData();
+
+        const ajoutElement= document.getElementById("ajout-photo");
         const titre= document.getElementById("titre").value;
         const categorie= parseInt(document.getElementById("champ-categories").value);
-        formData.append("image", image);
-        formData.append("title", titre);
-        formData.append("category", categorie);
-        validerFormulaire (formData);
-    });
-};
+        data.append("image", ajoutElement.files[0])
+        console.log(ajoutElement.files[0]);
+        data.append("title", titre);
+        data.append("category", categorie);
+        
+        validerFormulaire (data, titre);
+    })
+  };
 
 /*** Fonction validant le formulaire */
 
-export function validerFormulaire (titre, formData) {
-    // let regexTitre= new RegExp ("[a-zA-Za-z0-9._-]+");
+export function validerFormulaire (data, titre) {
+    let regexTitre= new RegExp ("[a-zA-Za-z0-9._-]+");
+    const ajoutElement= document.getElementById("ajout-photo");
 
 
-    // if (regexTitre.test(titre.trim()) === false) {
-    //     const erreurElement= document.getElementById("titre-modale-deux");
-    //     const erreurTitre= document.createElement("p");
-    //     erreurTitre.innerText= "Le titre ne peut pas être vide";
-    //     erreurTitre.classList.add("erreur");
-    //     erreurElement.replaceChildren(erreurTitre);
-    //     viderFormulaire ();
-    //     return
-    // };
+    if (ajoutElement.files[0] === undefined) {
+        const erreurElement= document.getElementById("titre-modale-deux");
+        const erreurTitre= document.createElement("p");
+        erreurTitre.innerText= "Erreur: Merci de choisir une image pour votre projet";
+        erreurTitre.classList.add("erreur");
+        erreurElement.replaceChildren(erreurTitre);
+        viderFormulaire ();
+        return
+    }
 
-    return envoyerFormulaireAjout (titre, formData);
+
+    if (regexTitre.test(titre.trim()) === false) {
+        const erreurElement= document.getElementById("titre-modale-deux");
+        const erreurTitre= document.createElement("p");
+        erreurTitre.innerText= "Erreur: Le titre ne peut pas être vide";
+        erreurTitre.classList.add("erreur");
+        erreurElement.replaceChildren(erreurTitre);
+        viderFormulaire ();
+        return
+    };
+
+     envoyerFormulaireAjout (data);
 
 };
 
 /*** Definition de la fonction envoyant la requête pour ajouter le projet */
 
-export async function envoyerFormulaireAjout (formData) {
+export async function envoyerFormulaireAjout (data) {
     const token = sessionStorage.getItem("token");
     
     try {
@@ -328,7 +349,7 @@ export async function envoyerFormulaireAjout (formData) {
         method: "POST",
         headers: {"Authorization": `Bearer ${token}` 
          },
-        body: formData
+        body: data
     })
 
     if (!response.ok) {
@@ -338,7 +359,6 @@ export async function envoyerFormulaireAjout (formData) {
         erreurTitre.classList.add("erreur");
         erreurElement.replaceChildren(erreurTitre);
         viderFormulaire ();
-        console.log(payLoad);
         throw new Error (`Erreur: ${response.status}`);
         
 
@@ -351,6 +371,7 @@ export async function envoyerFormulaireAjout (formData) {
     erreurTitre.classList.add("erreur");
     erreurElement.replaceChildren(erreurTitre);
     viderFormulaire ();
+    genererProjets();
 
 
 

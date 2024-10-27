@@ -63,26 +63,26 @@
 				<i class="fa-solid fa-xmark"></i>
 				<i class="fa-solid fa-arrow-left"></i>
 				<h3 id="titre-modale-deux" class="titre-modale"> Ajout photo </h3>
-					<form method="post" enctype="multipart/form-data" action="" sclass= "formulaire-ajout" id="formulaire-ajout">
+					<form method="post" enctype="multipart/form-data" action="" class= "formulaire-ajout" id="formulaire-ajout">
 						<div class="background">
 						<div class="preview-photo">
 							<img src="#" alt="Image à ajouter" id="file-preview">
 						<div class="ajout-photo">
 						<i class="fa-regular fa-image"></i>
-						<label for="ajout-photo" class="custom-ajout"> <span class= "text-ajout">+Ajouter photo </span> </label>
-						<input type="file" id="ajout-photo" accept="image/png, image/jpg">
-						<p> jpg, png: 4mo max </p>
+						<label for="ajout-photo" class="custom-ajout"> <span class= "text-ajout">+ Ajouter photo </span> </label>
+						<input type="file" id="ajout-photo" accept="image/png, image/jpg"/>
+						<p class="ajout-texte"> jpg, png: 4mo max </p>
 						</div>
 						</div>
 						</div>
-						<label for="titre"> Titre </label> 
+						<label for="titre" class="label-form"> Titre </label> 
 						<input type="text" id="titre" name="titre"> 
-						<label for="champ-categories"> Categorie </label> 
+						<label for="champ-categories" class="label-form"> Categorie </label> 
 						<select id="champ-categories" name="champ-categories" form="formulaire-ajout"> 
 
 						</select>
 						<div class="line-modale"> </div>
-						<input type="submit" value="Valider">
+						<input type="submit" id="bouton-valider" value="Valider">
 					</form>
 				</div>
 			<div>

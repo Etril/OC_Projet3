@@ -1,9 +1,6 @@
 /*** Import des fonctions nécessaires */
 import {genererProjets, genererProjetsModale, ajoutListenerModale, openModale, fermerModaleX, fermerModaleEcran, genererCategoriesModale, checkLogin, ajoutLogout, afficherMiniature, retourModale, viderFormulaire, ajoutListenerAdd, validerFormulaire, envoyerFormulaireAjout, supprimerProjets} from "./script_admin.js";
 
-/*** Récupération des projets dans l'API */
-const reponse = await fetch('http://localhost:5678/api/works');
-const works = await reponse.json();
 
 /*** Appel à la fonction vérifiant si l'utilisateur est bien log-in */
 
@@ -18,14 +15,14 @@ document.querySelector(".gallery").innerHTML="";
 
 /*** Appel à la fonction génératrice de la gallerie */
 
-genererProjets(works);
+genererProjets();
 
 /*** Appel à la fonction générant la gallerie de la modale */
 
-genererProjetsModale(works);
+genererProjetsModale();
 
 /*** Appel à la fonction générant le menu catégorie de la deuxième modale */
-genererCategoriesModale (works);
+genererCategoriesModale ();
 
 /*** Appel à la fonction ajoutant un event listener sur les liens modaux */
 
@@ -43,4 +40,8 @@ retourModale();
 /*** Appel à la fonction permettant d'afficher une miniature de l'image */
 
 afficherMiniature();
+
+/*** Appel à la fonction ajoutant un event listener sur le submit du formulaire */
+
+ajoutListenerAdd();
 
