@@ -17,13 +17,6 @@ document.querySelector(".gallery").innerHTML="";
 
 genererProjets();
 
-/*** Appel à la fonction générant la gallerie de la modale */
-
-genererProjetsModale();
-
-/*** Appel à la fonction générant le menu catégorie de la deuxième modale */
-genererCategoriesModale ();
-
 /*** Appel à la fonction ajoutant un event listener sur les liens modaux */
 
 ajoutListenerModale();
@@ -36,10 +29,6 @@ fermerModaleEcran();
 /*** Appel à la fonction permettant de revenir en arrière */
 
 retourModale();
-
-/*** Appel à la fonction permettant d'afficher une miniature de l'image */
-
-afficherMiniature();
 
 /*** Appel à la fonction ajoutant un event listener sur le submit du formulaire */
 
