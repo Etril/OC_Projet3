@@ -65,14 +65,17 @@
 				<h3 id="titre-modale-deux" class="titre-modale"> Ajout photo </h3>
 					<form method="post" enctype="multipart/form-data" action="" class= "formulaire-ajout" id="formulaire-ajout">
 						<div class="background">
-						<div class="preview-photo">
+						<div class="container-preview">
 							<img src="#" alt="Image à ajouter" id="file-preview">
+							<div class="overlay">
+								<button id="bouton-annuler" type="button"> Annuler </button>
+							</div>
+						</div>
 						<div class="ajout-photo">
 						<i class="fa-regular fa-image"></i>
 						<label for="ajout-photo" class="custom-ajout"> <span class= "text-ajout">+ Ajouter photo </span> </label>
 						<input type="file" id="ajout-photo" accept="image/png, image/jpg"/>
 						<p class="ajout-texte"> jpg, png: 4mo max </p>
-						</div>
 						</div>
 						</div>
 						<label for="titre" class="label-form"> Titre </label> 

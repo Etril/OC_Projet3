@@ -235,6 +235,17 @@ export function afficherMiniature () {
 });
 };
 
+/*** Definition d'une fonction pour revenir au formulaire d'ajout photo depuis la miniature */
+
+export function annulerMiniature () {
+
+    const boutonAnnuler= document.getElementById("bouton-annuler");
+    boutonAnnuler.addEventListener("click", function (e) {
+        e.preventDefault();
+        viderFormulaire();
+    })
+}
+
 
 /*** Definition d'une fonction pour revenir sur la modale précédente */
 
@@ -264,14 +275,17 @@ export async function viderFormulaire () {
     const formElement=document.getElementById("formulaire-ajout");
     formElement.innerHTML="";
     formElement.innerHTML=`<div class="background">
-						<div class="preview-photo">
+						<div class="container-preview">
 							<img src="#" alt="Image à ajouter" id="file-preview">
+							<div class="overlay">
+								<button id="bouton-annuler" type="button"> Annuler </button>
+							</div>
+						</div>
 						<div class="ajout-photo">
 						<i class="fa-regular fa-image"></i>
 						<label for="ajout-photo" class="custom-ajout"> <span class= "text-ajout">+ Ajouter photo </span> </label>
-						<input type="file" id="ajout-photo" accept="image/png, image/jpg">
+						<input type="file" id="ajout-photo" accept="image/png, image/jpg"/>
 						<p class="ajout-texte"> jpg, png: 4mo max </p>
-						</div>
 						</div>
 						</div>
 						<label for="titre" class="label-form"> Titre </label> 
@@ -283,6 +297,7 @@ export async function viderFormulaire () {
 						<div class="line-modale"> </div>
 						<input type="submit" id="bouton-valider" value="Valider">`;
     afficherMiniature ();
+    annulerMiniature();
     genererCategoriesModale(works);
 }
 
@@ -353,11 +368,11 @@ export async function envoyerFormulaireAjout (data) {
     })
 
     if (!response.ok) {
-        const erreurElement= document.getElementById("titre-modale-deux");
-        const erreurTitre= document.createElement("p");
-        erreurTitre.innerText= "Erreur sur l'envoi";
-        erreurTitre.classList.add("erreur");
-        erreurElement.replaceChildren(erreurTitre);
+        const annonceElement= document.getElementById("titre-modale-deux");
+        const annonceTitre= document.createElement("p");
+        annonceTitre.innerText= "Erreur sur l'envoi";
+        annonceTitre.classList.add("erreur");
+        annonceElement.replaceChildren(annonceTitre);
         viderFormulaire ();
         throw new Error (`Erreur: ${response.status}`);
         
@@ -365,11 +380,11 @@ export async function envoyerFormulaireAjout (data) {
     }
 
     console.log("projet bien ajouté");
-    const erreurElement= document.getElementById("titre-modale-deux");
-    const erreurTitre= document.createElement("p");
-    erreurTitre.innerText= "Projet bien envoyé";
-    erreurTitre.classList.add("erreur");
-    erreurElement.replaceChildren(erreurTitre);
+    const annonceElement= document.getElementById("titre-modale-deux");
+    const annonceTitre= document.createElement("p");
+    annonceTitre.innerText= "Projet bien ajouté";
+    annonceTitre.classList.add("success");
+    annonceElement.replaceChildren(annonceTitre);
     viderFormulaire ();
     genererProjets();
 
