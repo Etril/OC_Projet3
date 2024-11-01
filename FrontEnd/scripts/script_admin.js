@@ -1,14 +1,11 @@
-
-
 /*** Definition d'une fonction verifiant si la personne est bien log-in */
 
 export function checkLogin () {
     const login = sessionStorage.getItem("login");
     if (login !="true") {
         window.location.href = "login.html"; 
-    }
-    console.log(login);
-}
+    
+}};
 
 /*** Definition d'une fonction permettant de se déconnecter */
 
@@ -39,6 +36,7 @@ export async function genererProjetsModale() {
         lienElement.setAttribute("href", "#");
         lienElement.setAttribute("id", `${projet.id}`);
         imageElement.src= projet.imageUrl;
+        imageElement.setAttribute("alt", `(Miniature) ${projet.title}`);
         lienElement.appendChild(iconeElement);
         figureElement.appendChild(lienElement);
         figureElement.appendChild(imageElement);
@@ -59,8 +57,6 @@ export async function supprimerProjets (iconeId) {
         "id": iconeId
     }
     const payLoad= JSON.stringify(requete);
-    console.log (requete);
-    console.log(payLoad);
     
     try {
      const response= await fetch (`http://localhost:5678/api/works/${iconeId}`, {
@@ -85,7 +81,6 @@ export async function supprimerProjets (iconeId) {
     const reponse = await fetch('http://localhost:5678/api/works');
     const works = await reponse.json();
 
-    console.log(`Le projet ${iconeId} a bien été supprimé`);
 
     genererProjets(works);
     genererProjetsModale(works);
@@ -105,15 +100,13 @@ export async function supprimerProjets (iconeId) {
 export async function openModale(e) {
     e.preventDefault();
     const target= document.querySelector(e.target.getAttribute("href"));
-    console.log(target);
     target.style.display = "block";
-    target.removeAttribute("aria-hidden");
-    target.setAttribute("aria-modal", "true");
     const reponse = await fetch('http://localhost:5678/api/works');
     const works = await reponse.json();
     genererCategoriesModale ();
     genererProjetsModale();
     afficherMiniature();
+    afficherTitre();
 }
 
 /*** Definition d'une fonction ajoutant un event Listener sur les liens ouvrant des modales*/
@@ -135,12 +128,6 @@ export function fermerModaleX () {
             const modaleFermerElement= document.querySelectorAll(".modale");
             modaleFermerElement.forEach(b => {
                 b.style.display= "none"
-            });
-            modaleFermerElement.forEach(c => {
-                c.setAttribute("aria-hidden", "true");
-            });
-            modaleFermerElement.forEach(d => {
-                d.setAttribute("aria-modal", "false");
             });
             viderFormulaire();
         })
@@ -178,6 +165,7 @@ export async function genererProjets() {
         const figureElement= document.createElement("figure");
         const imageElement= document.createElement("img");
         imageElement.src= projet.imageUrl;
+        imageElement.setAttribute("alt", projet.title);
         const figcaptionElement= document.createElement("figcaption");
         figcaptionElement.innerText= projet.title;
         figureElement.appendChild(imageElement);
@@ -244,7 +232,14 @@ export function annulerMiniature () {
         e.preventDefault();
         viderFormulaire();
     })
-}
+};
+
+/*** Definition d'une fonction pour remettre le titre de la modale deux à l'ouverture */
+
+export function afficherTitre () {
+    const elementTitre = document.getElementById("titre-modale-deux");
+    elementTitre.innerHTML="Ajout photo";
+};
 
 
 /*** Definition d'une fonction pour revenir sur la modale précédente */
@@ -255,12 +250,6 @@ export function retourModale () {
             const modaleFermerElement= document.querySelectorAll(".modale");
             modaleFermerElement.forEach(b => {
                 b.style.display= "none"
-            });
-            modaleFermerElement.forEach(c => {
-                c.setAttribute("aria-hidden", "true");
-            });
-            modaleFermerElement.forEach(d => {
-                d.setAttribute("aria-modal", "false");
             });
             
             document.getElementById("lien-modale-un").click();
@@ -314,7 +303,6 @@ export function ajoutListenerAdd () {
         const titre= document.getElementById("titre").value;
         const categorie= parseInt(document.getElementById("champ-categories").value);
         data.append("image", ajoutElement.files[0])
-        console.log(ajoutElement.files[0]);
         data.append("title", titre);
         data.append("category", categorie);
         
@@ -376,10 +364,8 @@ export async function envoyerFormulaireAjout (data) {
         viderFormulaire ();
         throw new Error (`Erreur: ${response.status}`);
         
-
     }
 
-    console.log("projet bien ajouté");
     const annonceElement= document.getElementById("titre-modale-deux");
     const annonceTitre= document.createElement("p");
     annonceTitre.innerText= "Projet bien ajouté";
@@ -394,4 +380,4 @@ export async function envoyerFormulaireAjout (data) {
         console.error(error.message);
     }
 
-};
+}

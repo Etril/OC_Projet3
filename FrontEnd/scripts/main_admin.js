@@ -1,5 +1,5 @@
 /*** Import des fonctions nécessaires */
-import {genererProjets, genererProjetsModale, ajoutListenerModale, openModale, fermerModaleX, fermerModaleEcran, genererCategoriesModale, checkLogin, ajoutLogout, afficherMiniature, retourModale, viderFormulaire, ajoutListenerAdd, validerFormulaire, envoyerFormulaireAjout, supprimerProjets, annulerMiniature} from "./script_admin.js";
+import {genererProjets, genererProjetsModale, ajoutListenerModale, openModale, fermerModaleX, fermerModaleEcran, genererCategoriesModale, checkLogin, ajoutLogout, afficherMiniature, retourModale, viderFormulaire, ajoutListenerAdd, validerFormulaire, envoyerFormulaireAjout, supprimerProjets, annulerMiniature, afficherTitre} from "./script_admin.js";
 
 
 /*** Appel à la fonction vérifiant si l'utilisateur est bien log-in */

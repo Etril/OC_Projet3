@@ -8,6 +8,7 @@ export function genererProjets(works) {
         const figureElement= document.createElement("figure");
         const imageElement= document.createElement("img");
         imageElement.src= projet.imageUrl;
+        imageElement.setAttribute("alt", projet.title);
         const figcaptionElement= document.createElement("figcaption");
         figcaptionElement.innerText= projet.title;
         figureElement.appendChild(imageElement);
@@ -86,8 +87,6 @@ export function ajoutListenerLogin () {
         event.preventDefault();
         const email = document.getElementById("email").value;
         const mdp= document.getElementById("mdp").value;
-        console.log(email);
-        console.log(mdp);
         validerFormulaire (email, mdp);
     });
 };
@@ -105,7 +104,7 @@ export function validerFormulaire (email, mdp) {
         loginErreur.innerText= "Les informations ne sont pas dans un format valide";
         loginErreur.classList.add("login-erreur");
         loginElement.replaceChildren(loginErreur);
-        console.log("Le formulaire n'est pas valide");
+
         return
 
     };
@@ -120,8 +119,6 @@ export async function envoyerFormulaire (email, mdp) {
         "password": mdp
     }
     const payLoad= JSON.stringify(requete);
-    console.log (requete);
-    console.log(payLoad);
     
     try {
      const response= await fetch ("http://localhost:5678/api/users/login", {
@@ -142,11 +139,10 @@ export async function envoyerFormulaire (email, mdp) {
 
     }
 
-    const token= (await response.json()).token;
-    console.log(token);
-
-    sessionStorage.setItem("token", token);
+    const token= (await response.json());
     sessionStorage.setItem("login", "true");
+    sessionStorage.setItem("token", token.token);
+    sessionStorage.setItem("userId", token.userId);
 
     
     window.location.href = "dashboard.html"; 
