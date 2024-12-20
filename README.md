@@ -1,2 +1,2 @@
-# OC_Projet3
+# Sophie Bluel
 Création d'une page web portfolio dynamique en JavaScript
